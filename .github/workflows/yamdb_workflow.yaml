@@ -131,6 +131,30 @@ jobs:
 
          sudo docker stop $(sudo docker ps -a -q) > /dev/null 2>&1
          sudo docker kill $(sudo docker ps -a -q) > /dev/null 2>&1
+         
+         docker cp $id:/usr/src/web/.env.template .env
+         SECRET_KEY=${{ secrets.SECRET_KEY }}
+         DEBUG=${{ secrets.DEBUG }}
+         DJANGO_ALLOWED_HOSTS=${{ secrets.DJANGO_ALLOWED_HOSTS }}
+         DEFAULT_FROM_EMAIL=${{ secrets.DEFAULT_FROM_EMAIL }}
+         DB_ENGINE=${{ secrets.DB_ENGINE }}
+         DB_NAME=${{ secrets.DB_NAME }}
+         POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+         POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+         DB_HOST=${{ secrets.DB_HOST }}
+         DB_PORT=${{ secrets.DB_PORT }}
+         cat << EOF > add_secrets.py
+         
+         #!/usr/bin/python3
+         import os
+         with open('.env', 'r') as f:
+             content = f.readlines()
+         with open('.env', 'w') as f:
+             for env_var in [env_var.strip() for env_var in content]:
+                 f.write(f'{env_var}={os.environ.get(env_var)}\n')
+         EOF
+         sudo chmod 755 add_secrets.py
+         ./add_secrets.py 
         
          docker-compose up -d  --force-recreate
 

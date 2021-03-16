@@ -128,12 +128,10 @@ jobs:
          sudo docker cp $id:/usr/src/web/$FILE $FILE
 
          sudo docker rm -v $id
-         echo "sudo docker rm -v $id"
 
          sudo docker stop $(sudo docker ps -a -q) > /dev/null 2>&1
          sudo docker kill $(sudo docker ps -a -q) > /dev/null 2>&1
-         echo "Kill/stop all"
-         
+        
          docker-compose up -d  --force-recreate
 
 
@@ -172,3 +170,5 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: ${{ github.workflow }} успешно выполнен!
+        
+        

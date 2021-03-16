@@ -9,8 +9,8 @@ services:
     volumes:
       - static_data:/usr/src/web/static/
       - nginx_config:/usr/src/web/nginx/
-    env_file:
-      - ./.env
+#    env_file:
+#      - ./.env
     depends_on:
       - db
 
@@ -20,8 +20,8 @@ services:
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - ./.env
+#    env_file:
+#      - ./.env
 
   nginx:
     image: nginx:1.19.6-alpine

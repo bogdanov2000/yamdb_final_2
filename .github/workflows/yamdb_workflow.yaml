@@ -39,8 +39,8 @@ jobs:
        passphrase: ${{ secrets.PASSPHRASE }}
        script: |
 
-         sudo docker pull bogdanov2000/yamdb_final_2:latest
-         id=$(sudo docker create bogdanov2000/yamdb_final_2:latest)
+         sudo docker pull vamotest/yamdb_final
+         id=$(sudo docker create vamotest/yamdb_final)
 
          FILE=docker-compose.yaml
          if [ -f "$FILE" ]
@@ -70,8 +70,8 @@ jobs:
        key: ${{ secrets.SSH_KEY }}
        passphrase: ${{ secrets.PASSPHRASE }}
        script: |
-         docker system prune -f > /dev/null 2>&1
-         docker volume prune -f > /dev/null 2>&1
+         sudo docker system prune -f > /dev/null 2>&1
+         sudo docker volume prune -f > /dev/null 2>&1
 
 
    - name: Prepare django
@@ -98,3 +98,5 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: ${{ github.workflow }} успешно выполнен!
+        
+        

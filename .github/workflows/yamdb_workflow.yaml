@@ -39,8 +39,8 @@ jobs:
        passphrase: ${{ secrets.PASSPHRASE }}
        script: |
 
-         sudo docker pull vamotest/yamdb_final
-         id=$(sudo docker create vamotest/yamdb_final)
+         sudo docker pull bogdanov2000/yamdb_final_2
+         id=$(sudo docker create bogdanov2000/yamdb_final_2)
 
          FILE=docker-compose.yaml
          if [ -f "$FILE" ]
